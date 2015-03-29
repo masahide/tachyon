@@ -1,5 +1,5 @@
 package net
 
 import (
-	_ "github.com/vektra/tachyon/net/s3"
+	_ "github.com/masahide/tachyon/net/s3"
 )

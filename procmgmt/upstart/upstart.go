@@ -2,8 +2,8 @@ package upstart
 
 import (
 	"fmt"
-	"github.com/vektra/tachyon"
-	us "github.com/vektra/tachyon/upstart"
+	"github.com/masahide/tachyon"
+	us "github.com/masahide/tachyon/upstart"
 	"io/ioutil"
 	"path/filepath"
 	"strings"

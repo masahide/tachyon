@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"github.com/crowdmob/goamz/aws"
 	"github.com/crowdmob/goamz/s3"
-	"github.com/vektra/tachyon"
+	"github.com/masahide/tachyon"
 	"io"
 	"os"
 	"time"

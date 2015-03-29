@@ -2,8 +2,8 @@ package upstart
 
 import (
 	"bytes"
-	"github.com/vektra/tachyon"
-	us "github.com/vektra/tachyon/upstart"
+	"github.com/masahide/tachyon"
+	us "github.com/masahide/tachyon/upstart"
 	"io/ioutil"
 	"os"
 	"os/exec"

@@ -1,5 +1,5 @@
 package procmgmt
 
 import (
-	_ "github.com/vektra/tachyon/procmgmt/upstart"
+	_ "github.com/masahide/tachyon/procmgmt/upstart"
 )

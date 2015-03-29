@@ -2,7 +2,7 @@ package apt
 
 import (
 	"fmt"
-	"github.com/vektra/tachyon"
+	"github.com/masahide/tachyon"
 	"io/ioutil"
 	"os"
 	"path/filepath"

@@ -6,5 +6,5 @@ install:
   - mkdir ~/go
   - go get -d -v ./... && go build -v ./...
 go:
-  - 1.2
+  - 1.4.1
 script: sudo GOPATH=$GOPATH PATH=$PATH `which go` test -v ./...

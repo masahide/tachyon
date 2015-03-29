@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/vektra/tachyon"
-	_ "github.com/vektra/tachyon/net"
-	_ "github.com/vektra/tachyon/package"
-	_ "github.com/vektra/tachyon/procmgmt"
+	"github.com/masahide/tachyon"
+	_ "github.com/masahide/tachyon/net"
+	_ "github.com/masahide/tachyon/package"
+	_ "github.com/masahide/tachyon/procmgmt"
 	"os"
 )
 
