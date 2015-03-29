@@ -9,11 +9,15 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"os/user"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
 	"time"
+
+	"github.com/flynn/go-shlex"
 )
 
 func captureCmd(c *exec.Cmd, show bool) ([]byte, []byte, error) {
@@ -274,7 +278,15 @@ func (cmd *ShellCmd) Run(env *CommandEnv) (*Result, error) {
 		}
 	}
 
-	return runCmd(env, cmd.IgnoreFail, "sh", "-c", cmd.Command)
+	param := runCmdParam{
+		IgnoreFail:    cmd.IgnoreFail,
+		IgnoreChanged: cmd.IgnoreChanged,
+		ManualStatus:  cmd.ManualStatus,
+		ChangedRc:     cmd.ChangedRc,
+		OkRc:          cmd.OkRc,
+		ChangedCreate: cmd.ChangedCreate,
+	}
+	return runCmd(env, param, "sh", "-c", cmd.Command)
 }
 
 func (cmd *ShellCmd) ParseArgs(s Scope, args string) (Vars, error) {
@@ -614,4 +626,33 @@ func init() {
 	RegisterCommand("copy", &CopyCmd{})
 	RegisterCommand("mkfile", &MkFileCmd{})
 	RegisterCommand("script", &ScriptCmd{})
+}
+
+func ChangePerm(owner string, suid, sgid int) (uid, gid int, err error) {
+	var u *user.User
+	switch {
+	case owner != "" && suid != 0:
+		err = fmt.Errorf("both uid and owner is specified. owner:%s,uid:%d", owner, suid)
+		return
+	case owner == "" && suid == 0 && sgid == 0:
+		if u, err = user.Current(); err != nil {
+			return
+		}
+		uid, _ = strconv.Atoi(u.Uid)
+		gid, _ = strconv.Atoi(u.Gid)
+	case owner != "":
+		if u, err = user.Lookup(owner); err != nil {
+			return
+		}
+		uid, _ = strconv.Atoi(u.Uid)
+		if sgid != 0 {
+			gid = sgid
+		} else {
+			gid, _ = strconv.Atoi(u.Gid)
+		}
+	default:
+		uid = suid
+		gid = sgid
+	}
+	return
 }
